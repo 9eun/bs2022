@@ -32,11 +32,16 @@ server.get('/study', (req, res, next) => {
 
     let student = {
         id : 0,
+        age : 0,
         name : "손님"
+        
     }
 
     if(req.query.id !== null && req.query.id !== undefined){
         student.id = req.query.id;
+    }
+    if(req.query.age !== null && req.query.age !== undefined){
+        student.age = req.query.age;
     }
     if(req.query.name !== null && req.query.name !== undefined){
         student.name = req.query.name;
@@ -50,15 +55,17 @@ server.get('/study', (req, res, next) => {
 //구구단 페이지
 server.get('/99dan',  (req, res, next) => {
 
-    // http://localhost/study?primary=8
+    // http://localhost/99dan?primary=8
 
     let gugudan = {
         primary : 2,
         length : 9
+      
     }
 
     if(req.query.primary !== null && req.query.primary !== undefined){
         gugudan.primary = req.query.primary;
+        gugudan.primary2= parseInt(gugudan.primary)+1;
     }
   
     res.render("99dan.html", gugudan);
