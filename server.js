@@ -71,4 +71,41 @@ server.get('/99dan',  (req, res, next) => {
     res.render("99dan.html", gugudan);
 });
 
+//receive
+server.post('/recvData',  (req, res, next) => {
+let sensorData = {
+    hum :2,
+    temp: 2
+}
+if(req.body.hum !== null && req.body.hum !== undefined){
+    sensorData.hum = req.body.hum;
+    sensorData.hum= parseInt(sensorData.hum);
+}
+if(req.body.temp !== null && req.body.temp !== undefined){
+    sensorData.temp = req.body.temp;
+    sensorData.temp= parseInt(sensorData.temp);
+}
+console.log(req.body.hum);
+console.log(req.body.temp);
+console.log('매 분 마다 작업 실행');
+res.send('ACK')
+});
+
+//getData
+server.get('/getData',  (req, res, next) => {
+    let sensorData = {
+        hum :2,
+        temp: 2,
+        oxy: 2
+    }
+    sensorData.hum = Math.floor(Math.random() * 60);
+    sensorData.temp = Math.floor(Math.random() * 100);
+    sensorData.oxy = Math.floor(Math.random() * 101);
+    res.send(sensorData)
+    });
+
+    //getData html
+    server.get('/view', (req, res, next)=>{
+        res.render("getData.html");
+    });
 module.exports = server;
