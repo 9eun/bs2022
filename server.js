@@ -5,7 +5,16 @@
 var express             = require('express');
 var path                = require('path');
 var server              = express();
+var mysql               = require('mysql');
 
+var connection = mysql.createConnection({
+    host     : 'localhost',    // 호스트 주소
+    user     : 'root',           // mysql user
+    password : '1a2a3a4a',       // mysql password
+    database : 'han'         // mysql 데이터베이스
+  });
+
+  connection.connect();
 /************* view engine setup **************/
 server.set('views', path.join(__dirname, '/web'));
 
@@ -85,6 +94,18 @@ if(req.body.sd_value !== null && req.body.sd_value !== undefined){
     sensorData.sd_value = req.body.sd_value;
     sensorData.sd_value= parseInt(sensorData.sd_value);
 }
+var query_ = "insert into han.sensor_data_tbl";
+query_ += "(s_idx, sd_value, ins_date, upd_date)values";
+query_ += "("+ sensorData.s_idx+","+sensorData.sd_value+",now(), now())";
+
+console.log(query_);
+
+connection.query(query_, 
+function (error, results, fields) {
+  if (error) throw error;
+  console.log('The solution is: ', results);
+});
+
 console.log(req.body.s_idx);
 console.log(req.body.sd_value);
 console.log('매 분 마다 작업 실행');
