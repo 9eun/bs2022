@@ -8,26 +8,26 @@ const cron = require('node-cron');
 const axios = require('axios');
 const serverPort = 80;
 
-cron.schedule('*/2 * * * * *', function () {
-    let nowTime = new Date();
+//  cron.schedule('*/2 * * * * *', function () {
+//     let nowTime = new Date();
     
-     let s_idx = 1;
-     let sd_value = 8;
-     let oxy = 7;
-     // (6) 0 <= random <= 100
-     sd_value = Math.floor(Math.random() * 100);
+//      let s_idx = 1;
+//      let sd_value = 8;
+//      let oxy = 7;
+//      // (6) 0 <= random <= 100
+//      sd_value = Math.floor(Math.random() * 100);
      
-     axios({
-       url: 'http://localhost/recvData', // 통신할 웹문서
-       method: 'post', // 통신할 방식 get/post
-       data: { // 인자로 보낼 데이터
-         s_idx: s_idx,
-         sd_value : sd_value,
+//      axios({
+//        url: 'http://localhost/recvData', // 통신할 웹문서
+//        method: 'post', // 통신할 방식 get/post
+//        data: { // 인자로 보낼 데이터
+//          s_idx: s_idx,
+//          sd_value : sd_value,
          
-       }
-     });
-     console.log(sd_value)
-   });
+//        }
+//      });
+//      console.log(sd_value)
+//    }); 
 /************* Routing **************/
 //웹페이지의 세부 주소를 지정한다.
 server.use('/',            require('./server'));

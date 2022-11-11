@@ -79,12 +79,79 @@ server.get('/99dan',  (req, res, next) => {
   
     res.render("99dan.html", gugudan);
 });
-
+//User
+server.post('/User',(req, res, next) =>{
+    let userData={        
+        u_id:0
+    }
+    if(req.body.u_id !== null && req.body.u_id !== undefined){
+        userData.u_id = req.body.u_id;
+        userData.u_id=userData.u_id;
+    }
+    
+    var query_ = "select u_idx ";
+    query_ +=" from han.user_tbl ";
+    query_ +=" where u_id ='"+userData.u_id+"' "
+    console.log(query_);
+    connection.query(query_,
+        function (error, results, fields) {            
+          if (error) {
+            console.log('error 등록실패');
+            res.send('실패');            
+            // throw error; 
+          }else{
+        
+          console.log('매 분 마다 작업 실행');
+          res.send()
+           }
+          console.log('The solution is: ', results);
+        }
+        );
+    
+   
+})
+//Useradd
+server.post('/Useradd',(req, res, next) =>{
+    let userData={
+        u_id :1,
+        u_pass:0
+    }
+    if(req.body.u_id !== null && req.body.u_id !== undefined){
+        userData.u_id = req.body.u_id;
+        userData.u_id=userData.u_id;
+    }
+    if(req.body.u_pass !== null && req.body.u_pass !== undefined){
+        userData.u_pass = req.body.u_pass;
+        userData.u_pass= userData.u_pass;
+    }
+    var query_ = "insert into han.user_tbl ";
+    query_ +="(u_id, u_pass) values";
+    query_ +="('"+ userData.u_id+"','"+userData.u_pass+"')";
+    console.log(query_);
+    connection.query(query_,
+        function (error, results, fields) {
+            console.log(error)
+          if (error) {
+            console.log('error 등록실패');
+            res.send('실패');            
+            // throw error; 
+          }else{
+        
+          console.log('매 분 마다 작업 실행');
+          res.send('등록 완료')
+           }
+          console.log('The solution is: ', results);
+        }
+        );
+    
+   
+})
 //receive
 server.post('/recvData',  (req, res, next) => {
 let sensorData = {
     s_idx :2,
-    sd_value: 2
+    sd_value: 2,
+        
 }
 if(req.body.s_idx !== null && req.body.s_idx !== undefined){
     sensorData.s_idx = req.body.s_idx;
@@ -94,15 +161,23 @@ if(req.body.sd_value !== null && req.body.sd_value !== undefined){
     sensorData.sd_value = req.body.sd_value;
     sensorData.sd_value= parseInt(sensorData.sd_value);
 }
+
+// 쿼리 보냄
 var query_ = "insert into han.sensor_data_tbl";
-query_ += "(s_idx, sd_value, ins_date, upd_date)values";
+query_ += "(s_idx, sd_value, ins_date, upd_date) values";
 query_ += "("+ sensorData.s_idx+","+sensorData.sd_value+",now(), now())";
 
-console.log(query_);
+
 
 connection.query(query_, 
 function (error, results, fields) {
-  if (error) throw error;
+
+  if (error) {
+    console.log('error 등록실패');
+    throw error; 
+  }
+
+
   console.log('The solution is: ', results);
 });
 
